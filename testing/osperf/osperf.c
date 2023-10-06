@@ -44,8 +44,8 @@
 
 struct performance_time_s
 {
-  size_t start;
-  size_t end;
+  clock_t start;
+  clock_t end;
 };
 
 struct performance_thread_s
@@ -109,18 +109,18 @@ static int performance_thread_create(FAR void *(*entry)(FAR void *),
 
 static void performance_start(FAR struct performance_time_s *result)
 {
-  result->start = up_perf_gettime();
+  result->start = perf_gettime();
 }
 
 static void performance_end(FAR struct performance_time_s *result)
 {
-  result->end = up_perf_gettime();
+  result->end = perf_gettime();
 }
 
 static size_t performance_gettime(FAR struct performance_time_s *result)
 {
   struct timespec ts;
-  up_perf_convert(result->end - result->start, &ts);
+  perf_convert(result->end - result->start, &ts);
   return ts.tv_sec * NSEC_PER_SEC + ts.tv_nsec;
 }
 
