@@ -217,7 +217,7 @@ static size_t context_switch_performance(void)
 
 static void work_handle(void *arg)
 {
-  FAR struct performance_time_s *time = ((FAR void **)arg)[0];
+  FAR struct performance_time_s *time = ((FAR void **)arg)[2];
   FAR sem_t *sem = ((void **)arg)[1];
   performance_end(time);
   sem_post(sem);
@@ -233,7 +233,8 @@ static size_t hpwork_performance(void)
   FAR void *args = (void *[])
   {
     (FAR void *)&work,
-    (FAR void *)&sem
+    (FAR void *)&sem,
+    (FAR void *)&result
   };
 
   memset(&work, 0, sizeof(work));
